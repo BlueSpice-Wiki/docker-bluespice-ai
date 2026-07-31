@@ -10,6 +10,7 @@ RUN find /tmp/ai -type d -name '.git' | xargs rm -rf {} \;
 # Create virtual environment and install dependencies in builder stage
 RUN python -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
+RUN apk add --no-cache mariadb-connector-c-dev mariadb-connector-c
 RUN pip install --no-cache-dir -r /tmp/ai/requirements.txt
 
 FROM python:3.12-alpine

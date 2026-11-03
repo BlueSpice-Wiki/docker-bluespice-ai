@@ -126,6 +126,12 @@ inside the container.
 | AI__GOOGLE__MODEL                       | Model to use for LLM calls in Google AI (EXPERIMENTAL)																								   | 										   |
 | AI__GOOGLE__EMBEDDING_MODEL             | Embedding model for document storage and retrieval in google AI (EXPERIMENTAL)																		   |										   |
 | AI__MCP__URL 							  | MCP server URL																																		   |										   |
-| AI__MCP__API_KEY                        | MCP server API key; used for MCP's OAuth endpoints (consent link, token claim/refresh), tool calls use the user's own token |  |
-| AI__MCP__OAUTH_URL                      | Base URL of the MCP service's OAuth endpoints | AI__MCP__URL without "/mcp" |
+| AI__MCP__API_KEY                        | MCP server API key; MCP also uses it to pass the wiki's OAuth callback to this service. Tool calls use the user's own token |  |
+| AI__OAUTH__CLIENT_ID                    | Client ID of the wiki's OAuth 2.0 consumer the chatbot uses to act on behalf of users (create it with WikiMCPTools' `maintenance/createChatbotOAuthConsumer.php`) |  |
+| AI__OAUTH__CLIENT_SECRET                | Client secret of that consumer |  |
+| AI__OAUTH__REDIRECT_URI                 | The consumer's callback URL, e.g. `https://wiki.example.com/_mcp/oauth/callback` |  |
+| AI__OAUTH__PUBLIC_WIKI_URL              | Wiki URL as the user's browser sees it, e.g. `https://wiki.example.com` (for the consent link) |  |
+| AI__OAUTH__WIKI_URL                     | Internal wiki URL, e.g. `http://wiki-web:9090` (token exchange and refresh) |  |
+| AI__OAUTH__DEFAULT_WIKI                 | Path of the wiki that lists the others (`/mcp/get_wiki_map`) | w |
+| AI__OAUTH__SCOPES                       | Grants to request | basic editpage createeditmovepage |
 | AI__SECURITY__USER_TOKEN_ENCRYPTION_KEY | Secret to encrypt users' OAuth tokens in the database; changing it makes users allow access again | AI__SECURITY__STATIC_API_TOKEN |

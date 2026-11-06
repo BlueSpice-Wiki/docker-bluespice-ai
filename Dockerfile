@@ -4,7 +4,7 @@ FROM python:3.12-alpine AS builder
 ARG REPO_BRANCH="1.1.x"
 ENV REPO_URL="https://gitlab.hallowelt.com/ai/webservice-ai.git"
 ADD "$REPO_URL#$REPO_BRANCH" /tmp/ai/
-RUN date >> /tmp/ai/BUILDINFO
+RUN date -u +%Y%m%d%H%M%S > /tmp/ai/BUILDINFO
 RUN find /tmp/ai -type d -name '.git' | xargs rm -rf {} \;
 
 # Create virtual environment and install dependencies in builder stage
@@ -47,6 +47,9 @@ COPY --from=builder --chown=bluespice:bluespice /tmp/ai ./ai
 # Set PATH to use the virtual environment
 ENV PATH="/opt/venv/bin:$PATH"
 RUN python -c "import tiktoken; tiktoken.get_encoding('cl100k_base')"
+
+# Build timestamp (UTC, YmdHis)
+RUN mkdir -p /image && date -u +%Y%m%d%H%M%S > /image/BUILDINFO
 
 # Security: Run as non-root user
 USER bluespice
